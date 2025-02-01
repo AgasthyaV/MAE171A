@@ -199,8 +199,7 @@ if DOFs==2,
     end    
     deng=[m1*m2 (m1*d2+m2*d1) (k2*m1+(k1+k2)*m2+d1*d2) ((k1+k2)*d2+k2*d1) k1*k2];
     if encoderout==1,
-        
-        numg=[m1 d1 k1]; % for x1 as output
+        numg=[m2 d2 k2]; % for x1 as output
         disp('Using m1,d1,k1 and m2,d2,k2 parameters for 2DOF with encoder 1 output');
     else
         numg=k2;         % for x2 as output
@@ -212,7 +211,6 @@ else
             error('m1 = 0 not allowed!');
         end
         numg=[1];        % for x1 as output
-       
         deng=[m1 d1 k1];
         disp('Using m1,d1,k1 parameters only for 1DOF with encoder 1 output');
     else
@@ -501,11 +499,9 @@ if option==2,
           % data=readecp(sfilename,'Time',encoderpos);
           load(sfilename) 
           t = time;
-          if encoderout==1
-              y = enc1;
-          else
-              y= enc2;
-          end
+          y = enc1;
+          % t=data(:,1);
+          % y=data(:,2);
           clear data
       end
 
@@ -519,7 +515,7 @@ if option==2,
    %
    % Here we compute step response
    %
-   tstep=linspace(0,1e-3*dwelltime,900)';
+   tstep=linspace(0,2*1e-3*dwelltime,900)';
    ustep=[stepsize*ones(450,1);0*ones(450,1)];   
    % the step response without the hardware gain Khw that only plays a role in
    % feedback controller implementation
@@ -680,11 +676,7 @@ if option==3,
           % y=data(:,2);
           load(sfilename) 
           t = time;
-          if encoderout==1
-              y = enc1;
-          else
-              y= enc2;
-          end
+          y = enc1;
           clear data
       end
       
@@ -1061,7 +1053,7 @@ else
 
    
    %
-   % Here we plot the Bode `plot of the controller
+   % Here we plot the Bode plot of the controller
    %
    figure(3)
    plttitle='Bode plot of controller C(s)';
