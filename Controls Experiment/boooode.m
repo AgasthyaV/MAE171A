@@ -24,11 +24,13 @@ C = pid(Kp, Ki, Kd);
 T = feedback(C * G, 1);
 
 % Step response of the closed-loop system
-figure;
-step(T);
-title('Closed-Loop Step Response with PID Controller');
-grid on;
-
+%figure;
+%step(T);
+%title('Closed-Loop Step Response with PID Controller');
+%grid on;
+stepinfo(T)
+%{
+ 
 % Performance Analysis
 info = stepinfo(T);
 fprintf('Settling Time: %.4f sec\n', info.SettlingTime);
@@ -52,4 +54,6 @@ hold off;
 % Check if control effort exceeds ±5V
 if max(abs(u)) > 5
     disp('Warning: Control effort exceeds saturation limit (±5V). Consider retuning the PID gains.');
-end
+end 
+%}
+
